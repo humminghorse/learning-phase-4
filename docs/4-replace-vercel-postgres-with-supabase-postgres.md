@@ -23,6 +23,7 @@ Databaseとして利用していたVercel PostgresのWritten Dataの月間の上
 ![](images/2023-11-23-22-07-57.png)
 
 - Add Integrationボタンをクリックしてください。
+
 ![](images/2023-11-23-22-14-21.png)
 
 - ご自身のVercelプロジェクトを選択して、Continueボタンをクリックしてください。
@@ -140,6 +141,7 @@ npx prisma studio
 - Deploymentsタブの最新のデプロイで、Redeployをクリックしてください。
 ![](images/2023-11-24-00-26-35.png)
 - Redeployをクリックしてください。
+
 ![](images/2023-11-24-00-27-33.png)
 - デプロイ完了後、Visitボタンをクリックしてください。
 ![](images/2023-11-24-00-30-22.png)

@@ -1,4 +1,4 @@
-## 4. 第4回で作ったアプリのDBをsupabaseに置き換え
+## 4. 第4回で作ったアプリのDBをSupabaseに置き換え
 
 ### 前回の講義で分かった課題
 Databaseとして利用していたVercel PostgresのWritten Dataの月間の上限が256MBで、それを1日で超えてしまっていました。
@@ -88,7 +88,7 @@ npx prisma migrate dev --name init
 npx prisma migrate reset
 ```
 
-※ .envの設定が正しくてもコマンドが成功しない場合、supabaseのSettings > Database > Network Bansにご自身のIPアドレスが登録されていないかを確認して、もし登録されていればUnbanしてください。
+※ .envの設定が正しくてもコマンドが成功しない場合、SupabaseのSettings > Database > Network Bansにご自身のIPアドレスが登録されていないかを確認して、もし登録されていればUnbanしてください。
 
 ![](images/2023-11-23-23-15-11.png)
 

@@ -1,6 +1,6 @@
-## 4. 第4回で作ったアプリのDBをSupabaseに置き換え
+# 4. 第4回で作ったアプリのDBをSupabaseに置き換え
 
-### 前回の講義で分かった課題
+## 前回の講義で分かった課題
 Databaseとして利用していたVercel PostgresのWritten Dataの月間の上限が256MBで、それを1日で超えてしまっていました。
 ![](images/2023-11-23-21-58-30.png)
 
@@ -12,7 +12,7 @@ Databaseとして利用していたVercel PostgresのWritten Dataの月間の上
 <!-- 無料から使えるデータベース比較: https://qiita.com/takiguchi-yu/items/020e17151903011d92f6 -->
 <!-- https://supabase.com/pricing -->
 
-### Supabaseでプロジェクトを作成
+## Supabaseでプロジェクトを作成
 - 前回作成したVercelプロジェクトのStorageタブを開いて、Connect Storeボタンをクリックしてください。
 ![](images/2023-11-23-22-04-24.png)
 
@@ -60,7 +60,7 @@ Databaseとして利用していたVercel PostgresのWritten Dataの月間の上
 この画面が表示されたら、プロジェクトの作成は完了です。
 ![](images/2023-11-23-22-31-15.png)
 
-### ローカルアプリのデータベースをSupabaseに置き換え
+## ローカルアプリのデータベースをSupabaseに置き換え
 
 <!-- 参考: Rails エンジニアが Prisma に入門する：本番デプロイ(Vercel+Supabase)編: https://zenn.dev/monicle/articles/a3c153c8127eb9 -->
 
@@ -106,7 +106,7 @@ npx prisma studio
 ![](images/2023-11-23-23-44-22.png)
 
 
-### VercelアプリのデータベースをSupabaseに置き換え
+## VercelアプリのデータベースをSupabaseに置き換え
 続いて、VercelにデプロイしたアプリのデータベースをSupabaseに置き換えましょう。
 
 - この画面を再度開いて、Resume Setupボタンをクリック(開き直した場合は、Add Integrationボタンになります)

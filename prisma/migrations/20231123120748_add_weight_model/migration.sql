@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE "Weight" (
+    "id" SERIAL NOT NULL,
+    "weight" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "petId" INTEGER NOT NULL,
+
+    CONSTRAINT "Weight_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "Weight" ADD CONSTRAINT "Weight_petId_fkey" FOREIGN KEY ("petId") REFERENCES "Pet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

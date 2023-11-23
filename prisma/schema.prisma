@@ -27,4 +27,14 @@ model Pet {
   updatedAt     DateTime  @updatedAt
   owner         User?     @relation(fields: [ownerId], references: [id])
   ownerId       Int?
+  weights       Weight[]
+}
+
+model Weight {
+  id            Int       @id @default(autoincrement())
+  weight        Float
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  pet           Pet       @relation(fields: [petId], references: [id])
+  petId         Int
 }

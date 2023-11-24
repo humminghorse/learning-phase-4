@@ -1,159 +1,171 @@
-# 4. 第4回で作ったアプリのDBをSupabaseに置き換え
+# 4. Replace Vercel Postgres with Supabase Postgre
 
-## 前回の講義で分かった課題
-Databaseとして利用していたVercel PostgresのWritten Dataの月間の上限が256MBで、それを1日で超えてしまっていました。
+## Issues found in the previous lecture
+The monthly limit for Written Data in Vercel Postgres, which was used as the Database, was 256 MB, which was exceeded in one day.
 ![](images/2023-11-23-21-58-30.png)
 
-参考: Vercel Postgres Pricing
+Reference: Vercel Postgres Pricing
 
 ![](images/2023-11-23-22-00-36.png)
 
-そのままではデータの書き込みができず、使い物にならないので、Databaseを別のサービスである、Supabaseに置き換えていきましょう。
+As it is, the data cannot be written and is useless, so let's replace Database with another service, Supabase.
 
-## Supabaseでプロジェクトを作成
-- 前回作成したVercelプロジェクトのStorageタブを開いて、Connect Storeボタンをクリックしてください。
+## Create a project with Supabase
+- Open the Storage tab of the Vercel project you created last time and click the Connect Store button.
 ![](images/2023-11-23-22-04-24.png)
 
-- Browse Database Integrationsをクリックしてください。
+- Click on Browse Database Integrations.
 
 ![](images/2023-11-23-22-05-05.png)
 
-- Supabaseを選択してください。
+- Select Supabase.
+
 ![](images/2023-11-23-22-07-57.png)
 
-- Add Integrationボタンをクリックしてください。
+- Click the Add Integration button.
 
 ![](images/2023-11-23-22-14-21.png)
 
-- ご自身のVercelプロジェクトを選択して、Continueボタンをクリックしてください。
+- Select your Vercel project and click the Continue button.
+
 ![](images/2023-11-23-22-16-38.png)
 
-- All Projectsが選択されたまま、Continueボタンをクリックしてください。
+- With All Projects selected, click the Continue button.
+
 ![](images/2023-11-23-22-17-21.png)
 
-- Add Integrationボタンをクリックしてください。
+- Click the Add Integration button !
 
 ![](images/2023-11-23-22-18-02.png)
 
-- Continue with GitHubをクリックしてください。
+- Click Continue with GitHub.
+
 ![](images/2023-11-23-22-19-19.png)
 
-- Authorize supabaseをクリックしてください。
+- Click Authorize supabase.
+
 ![](images/2023-11-23-22-19-55.png)
 
-- Start a new Supabase project → をクリックしてください。
+- Click Start a new Supabase project →
+
 ![](images/2023-11-23-22-20-37.png)
 
-- New projectをクリックしてください。
+- Click New project !
+
 ![](images/2023-11-23-22-22-05.png)
 
-- 以下を入力して、Create new projectをクリックしてください。
+- Enter the following and click Create new project.
   - Name: LearningPhase
-  - Database Password: Generate a passwordで設定(メモを残すことを忘れずに)
+  - Database Password: Set by Generate a password (remember to leave a note)
   - Region: Northeast Asia(Tokyo)
 
 ![](images/2023-11-23-22-28-52.png)
 
-この画面の間は待ちましょう。
+Wait during this screen.
+
 ![](images/2023-11-23-22-30-16.png)
 
-この画面が表示されたら、プロジェクトの作成は完了です。
+When this screen appears, the project creation is complete.
 ![](images/2023-11-23-22-31-15.png)
 
-## ローカルアプリのデータベースをSupabaseに置き換え
+## Replace local app database with Supabase
 
-- Settings > Database > Connection Pooling Custom Configuration > Connection stringでCopyをクリックしてください。
+- Settings > Database > Connection Pooling Custom Configuration > Connection string and click Copy.
 ![](images/2023-11-23-23-25-10.png)
 
-- Visual Studio Codeで前回開発したアプリ(learning-phase-4)を開いてください。
-  - Click `File > Open Folder...` and select `learning-phase-4` folder.
+- Open the previously developed app (learning-phase-4) in Visual Studio Code.
+  - Click `File > Open Folder... ` and select `learning-phase-4` folder.
     ![Open Folder](images/1/2023-11-17-08-40-25.png)
 
-- .envのPOSTGRES_PRISMA_URLの値にコピーしたURIを貼り付けて、`[YOUR-PASSWORD]` をメモしておいたパスワードに置き換えてください。また、URIの末尾に`?pgbouncer=true&connect_timeout=15`を追加してください。また、その他の行は不要なので、削除してください。
+- Paste the copied URI into the POSTGRES_PRISMA_URL value in the .env and replace `[YOUR-PASSWORD]` with the password you wrote down. Also, add `?pgbouncer=true&connect_timeout=15` to the end of the URI. Also, delete the other lines as they are unnecessary.
 ![](images/2023-11-23-23-27-55.png)
 
-- Settings > Database > Connection string > URI でCopyをクリックしてください。
+- Click Copy in Settings > Database > Connection string > URI.
 ![](images/2023-11-23-22-50-12.png)
 
-- .envにPOSTGRES_URL_NON_POOLINGの行を追加し、値にコピーしたURIを貼り付けて、`[YOUR-PASSWORD]` をメモしておいたパスワードに置き換えてください。
+- Add a line POSTGRES_URL_NON_POOLING to your .env, paste the copied URI into the value and replace `[YOUR-PASSWORD]` with the password you wrote down.
 ![](images/2023-11-23-23-03-12.png)
 
-- 以下2つのコマンドを実行してください。
+- Execute the following two commands.
 
 ```bash
 npx prisma migrate dev --name init
 ```
+
 ```bash
 npx prisma migrate reset
 ```
 
-※ .envの設定が正しくてもコマンドが成功しない場合、SupabaseのSettings > Database > Network Bansにご自身のIPアドレスが登録されていないかを確認して、もし登録されていればUnbanしてください。
+If the .env setting is correct but the command does not succeed, please check if your IP address is not registered in Supabase Settings > Database > Network Bans, and unban it if it is registered.
 
 ![](images/2023-11-23-23-15-11.png)
 
-- SupabaseのTable Editorで、テーブルが作成され、Seedデータが登録されたことが確認できます。
+- In Supabase's Table Editor, you can confirm that the table has been created and the Seed data has been registered.
 ![](images/2023-11-23-23-38-57.png)
 
-- SupabaseのTable Editorで、Petのnameを変更してみましょう。
+- Let's change the name of Pet in Supabase's Table Editor.
 ![](images/2023-11-23-23-43-15.png)
 
-- 以下のコマンドで起動するPrismaStudioでもnameが変更されており、データベースがSupabaseに置き換えられたことが確認できます。
+- The name is also changed in PrismaStudio, which is started by the following command. This means that the database has been replaced by Supabase.
+
 ```bash
 npx prisma studio
 ```
+
 ![](images/2023-11-23-23-44-22.png)
 
 
-## VercelアプリのデータベースをSupabaseに置き換え
-続いて、VercelにデプロイしたアプリのデータベースをSupabaseに置き換えましょう。
+## Replace the database of your Vercel app with Supabase
+Next, let's replace the database of the app deployed in Vercel with Supabase.
 
-- この画面を再度開いて、Resume Setupボタンをクリック(開き直した場合は、Add Integrationボタンになります)
+- Reopen this screen and click the Resume Setup button (if you reopen it, it will be the Add Integration button).
 
 ![](images/2023-11-23-23-53-11.png)
 
-- Vercel Project と Supabase Projectを選択して、Add Integrationをクリックしてください。
+- Select Vercel Project and Supabase Project and click Add Integration !
 ![](images/2023-11-23-23-57-46.png)
 
-- Storageタブをクリックしてください。
+- Click on the Storage tab.
 ![](images/2023-11-24-00-01-06.png)
 
-- learning-phase-4-postgresを選択してください。
+- Select learning-phase-4-postgres.
 ![](images/2023-11-24-00-17-07.png)
 
-- 左下のProjectsを選択し、learning-phase-4プロジェクトに対してRemove Project Connectionを実行してください。
+- Select Projects in the lower left corner and perform a Remove Project Connection to the learning-phase-4 project.
 ![](images/2023-11-24-00-17-34.png)
 
-- Remove Connectionをクリックしてください。
+- Click Remove Connection.
 
 ![](images/2023-11-24-00-18-21.png)
 
-- learning-phase-4プロジェクトのStorageタブを開くと、VercelのPostgresと未接続の状態になったことが確認できます。
+- Open the Storage tab of the learning-phase-4 project and you will see that it is now unconnected to Vercel's Postgres.
 ![](images/2023-11-24-00-19-06.png)
 
-- Settings > Environment Variablesを開き、以下2つの環境変数をローカルの.envと同じ値で追加して、Saveボタンをクリックしてください。
+- Open Settings > Environment Variables, add the following two environment variables with the same values as the local .env and click the Save button.
   - POSTGRES_PRISMA_URL
   - POSTGRES_URL_NON_POOLING
 ![](images/2023-11-24-00-22-55.png)
 
-続いて、環境変数の変更をVercel上のアプリに反映するために、デプロイを実行します。
+Next, run Deploy to reflect the environment variable changes in the app on Vercel.
 
-- Deploymentsタブの最新のデプロイで、Redeployをクリックしてください。
+- On the Deployments tab, under Latest Deployments, click on Redeploy.
 
 ![](images/2023-11-24-00-26-35.png)
-- Redeployをクリックしてください。
+- Click Redeploy.
 
 ![](images/2023-11-24-00-27-33.png)
 
-- デプロイ完了後、Visitボタンをクリックしてください。
+- After deployment is complete, click on the Visit button !
 ![](images/2023-11-24-00-30-22.png)
 
-- ブラウザのURLの末尾に `/api/pets` を追加しましょう。
+- Add `/api/pets` to the end of your browser URL.
+
 ![](images/2023-11-24-00-31-17.png)
 
-- Supabaseで変更した名前のペットが表示されます。
+- You will see the pets with the names you changed in Supabase.
 
 ![](images/2023-11-24-00-31-38.png)
 
-これで、VercelにデプロイしたアプリのデータベースをSupabaseに置き換えられました。
+Now you have replaced the database of the application deployed in Vercel with Supabase.
 
 Next [`Advanced API Development #5`](./5-advanced-api-development.md)

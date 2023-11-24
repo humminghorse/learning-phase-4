@@ -5,6 +5,7 @@ Databaseとして利用していたVercel PostgresのWritten Dataの月間の上
 ![](images/2023-11-23-21-58-30.png)
 
 参考: Vercel Postgres Pricing
+
 ![](images/2023-11-23-22-00-36.png)
 
 そのままではデータの書き込みができず、使い物にならないので、Databaseを別のサービスである、Supabaseに置き換えていきましょう。
@@ -14,6 +15,7 @@ Databaseとして利用していたVercel PostgresのWritten Dataの月間の上
 ![](images/2023-11-23-22-04-24.png)
 
 - Browse Database Integrationsをクリックしてください。
+
 ![](images/2023-11-23-22-05-05.png)
 
 - Supabaseを選択してください。
@@ -30,6 +32,7 @@ Databaseとして利用していたVercel PostgresのWritten Dataの月間の上
 ![](images/2023-11-23-22-17-21.png)
 
 - Add Integrationボタンをクリックしてください。
+
 ![](images/2023-11-23-22-18-02.png)
 
 - Continue with GitHubをクリックしてください。
@@ -121,6 +124,7 @@ npx prisma studio
 ![](images/2023-11-24-00-17-34.png)
 
 - Remove Connectionをクリックしてください。
+
 ![](images/2023-11-24-00-18-21.png)
 
 - learning-phase-4プロジェクトのStorageタブを開くと、VercelのPostgresと未接続の状態になったことが確認できます。
@@ -134,15 +138,20 @@ npx prisma studio
 続いて、環境変数の変更をVercel上のアプリに反映するために、デプロイを実行します。
 
 - Deploymentsタブの最新のデプロイで、Redeployをクリックしてください。
+
 ![](images/2023-11-24-00-26-35.png)
 - Redeployをクリックしてください。
 
 ![](images/2023-11-24-00-27-33.png)
+
 - デプロイ完了後、Visitボタンをクリックしてください。
 ![](images/2023-11-24-00-30-22.png)
+
 - ブラウザのURLの末尾に `/api/pets` を追加しましょう。
 ![](images/2023-11-24-00-31-17.png)
+
 - Supabaseで変更した名前のペットが表示されます。
+
 ![](images/2023-11-24-00-31-38.png)
 
 これで、VercelにデプロイしたアプリのデータベースをSupabaseに置き換えられました。

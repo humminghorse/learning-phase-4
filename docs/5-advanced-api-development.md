@@ -23,7 +23,8 @@ npm install @supabase/supabase-js
 ```
 
 - `lib` フォルダの配下に `supabaseClient.ts`というファイルを追加し、以下のコードをコピーする。
-```ts
+
+```
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -34,6 +35,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 ```
+
 ![](images/2023-11-25-02-29-52.png)
 
 これで。Supabaseの認証機能を使う準備ができました。
@@ -42,7 +44,8 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 まずは、Signupできるようにします。
 
 - `src/app/api` 配下に `signup` フォルダを作成し、その中に `route.ts`というファイルを作成して、以下のコードを貼り付けてください。
-```ts
+
+```
 import { NextResponse } from 'next/server'
 
 import { supabase } from '../../../../lib/supabaseClient'
@@ -64,9 +67,11 @@ export async function POST(request: Request) {
   return NextResponse.json(authResponse)
 }
 ```
+
 ![](images/2023-11-25-02-48-45.png)
 
 - request.httpに以下を追記して、emailとpasswordの値を書き換えてから、SendRequestを実行してください。
+
 ```
 ### signup
 POST {{baseUrl}}/signup HTTP/1.1
@@ -77,6 +82,7 @@ Content-Type: application/json
   "password": "<ANY PASSWORD>"
 }
 ```
+
 ![](images/2023-11-25-02-55-40.png)
 
 - 以下のようなResponseが表示されたらOKです。
@@ -98,7 +104,8 @@ Content-Type: application/json
 続いて、Signinできるようにします。
 
 - `src/app/api` 配下に `signin` フォルダを作成し、その中に `route.ts`というファイルを作成して、以下のコードを貼り付けてください。
-```ts
+
+```
 import { NextResponse } from 'next/server'
 
 import { supabase } from '../../../../lib/supabaseClient'
@@ -116,9 +123,11 @@ export async function POST(request: Request) {
   return NextResponse.json(authTokenResponse.data.session)
 }
 ```
+
 ![](images/2023-11-25-03-27-36.png)
 
 - request.httpに以下を追記して、emailとpasswordの値を書き換えてから、SendRequestを実行してください。
+
 ```
 ### signin
 POST {{baseUrl}}/signin HTTP/1.1
@@ -129,6 +138,7 @@ Content-Type: application/json
   "password": "<ANY PASSWORD>"
 }
 ```
+
 ![](images/2023-11-25-03-21-14.png)
 
 - 以下のようなResponseが表示されたらOKです。
@@ -172,7 +182,8 @@ Content-Type: application/json
 
 ### 画像アップロードAPI
 - `src/app/api` 配下に `images` フォルダを作成し、その中に `route.ts`というファイルを作成して、以下のコードを貼り付けてください。
-```ts
+
+```
 import { NextResponse } from 'next/server'
 
 import { supabase } from '../../../../lib/supabaseClient'
@@ -188,12 +199,14 @@ export async function POST(request: Request) {
   return NextResponse.json(response)
 }
 ```
+
 ![](images/2023-11-25-05-50-29.png)
 
 - imagesフォルダを作成し、アップロードする画像を保存してください。どんな画像でもOKです。
 ![](images/2023-11-25-05-58-50.png)
 
 - request.httpに以下を追記して、<YOUR FILE NAME>と <YOUR FILE PATH>の値を書き換えてから、SendRequestを実行してください。
+
 ```
 ### upload image
 POST {{baseUrl}}/images HTTP/1.1
@@ -206,6 +219,7 @@ Content-Type: image/jpeg
 < <YOUR FILE PATH>
 --MyBoundary--
 ```
+
 ![](images/2023-11-25-06-01-23.png)
 
 - 以下のようなResponseが表示されたらOKです。
@@ -221,3 +235,9 @@ https://supabase.com/docs/reference/javascript/storage-from-list
 ![](images/2023-11-25-06-24-20.png)
 
 ヒント: listメソッドに渡すParametersは全てOptionalなので、省略して `list()` としてOKです。
+
+## Vercel上のアプリへの反映
+変更のCommit, Pushをしておきましょう。そうすることで、Vercel上のアプリにも反映をしておきましょう。
+(やり方を忘れた人は、第4回レクチャーの資料を参考にしてください。)
+
+

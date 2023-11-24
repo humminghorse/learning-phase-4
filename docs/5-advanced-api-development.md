@@ -147,7 +147,15 @@ Content-Type: application/json
 ![](images/2023-11-25-03-21-14.png)
 
 - 以下のようなResponseが表示されたらOKです。
+  - Responseに含まれるaccess_tokenには本人確認に必要な情報が含まれており、これを使って、認証済の状態であることの確認が行われます。
 ![](images/2023-11-25-03-28-36.png)
+
+
+- 参考: access_tokenをデコードすることで、ユーザ情報を取得できます。
+  - デコードができるサイト: https://jwt.io/
+![](images/2023-11-25-04-05-07.png)
+
+<!-- 本当は、AuthorizationヘッダーでBearerを受けとって、supabaseClientにセットしたい。ただ、フロントアプリを作ればそんなことしなくて良いので、無駄かも。 -->
 
 
 ## 画像のアップロード

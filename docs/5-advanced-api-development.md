@@ -158,30 +158,82 @@ Content-Type: application/json
 <!-- 本当は、AuthorizationヘッダーでBearerを受けとって、supabaseClientにセットしたい。ただ、フロントアプリを作ればそんなことしなくて良いので、無駄かも。 -->
 
 
-## 画像のアップロード
+## ファイルのアップロード
+画像ファイルをアップロードできるAPIを作成しましょう。
 <!-- Supabaseストレージに画像をアップロードし、表示する: https://qiita.com/dshukertjr/items/05437bb88bc7ae8583b8 -->
 <!-- 話題のSupabaseでサクッと画像投稿機能をつくってみた！: https://qiita.com/kaho_eng/items/84df0ccfdc0ab5b8eb83 -->
 
 <!-- Next.JS の API Route でのファイルアップロード受信処理: https://qiita.com/migimatsu/items/3fabebdaf087ee120859 -->
 
-- New Bucket
+### バケット(ファイルの保存先)の作成
+- Supabaseで Storage > New Bucketを選択してください。
 ![](images/2023-11-24-10-00-33.png)
 
-- Public bucketをONにしてSave
+- Name of bucketに `learning-phase`と入力し、Public bucketをONにしてSaveしてください。
+
 ![](images/2023-11-24-10-02-06.png)
 
-- Other policies under storage.objects
+### ポリシー設定
+初期状態ではセキュリティ設定でファイルアップロードができないので、許可設定を追加します。
+
+- Policiesを開き、learning-phaseの右のNewPolicyボタンをクリックしてください。
 ![](images/2023-11-24-10-04-36.png)
 
-- Get started quickly
+- For full customizationを選択してください。
 ![](images/2023-11-24-10-05-10.png)
 
--
+- 以下のように設定してください
+  - Policy name: allow-all
+  - Allowed operation: SELECT, INSERT, UPDATE, DELETE
+  - Target roles: Default
+  - Policy definition: Default
 
----
-```bash
-npm install formidable
+![](images/2023-11-25-04-37-27.png)
+
+
+### 画像アップロードAPI
+- `src/app/api` 配下に `images` フォルダを作成し、その中に `route.ts`というファイルを作成して、以下のコードを貼り付けてください。
+```ts
+import { NextResponse } from 'next/server'
+
+import { supabase } from '../../../../lib/supabaseClient'
+
+export async function POST(request: Request) {
+  const formData = await request.formData()
+  const file = formData.get('file') as File
+
+  const response = await supabase.storage
+    .from('learning-phase') // target bucket name
+    .upload(file.name, file)
+
+  return NextResponse.json(response)
+}
 ```
+![](images/2023-11-25-05-50-29.png)
+
+- imagesフォルダを作成し、アップロードする画像を保存してください。どんな画像でもOKです。
+![](images/2023-11-25-05-58-50.png)
+
+- request.httpに以下を追記して、<YOUR FILE NAME>と <YOUR FILE PATH>の値を書き換えてから、SendRequestを実行してください。
+```
+### upload image
+POST {{baseUrl}}/images HTTP/1.1
+Content-Type: multipart/form-data; boundary=MyBoundary
+
+--MyBoundary
+Content-Disposition: form-data; name="file"; filename="<YOUR FILE NAME>"
+Content-Type: image/jpeg
+
+< <YOUR FILE PATH>
+--MyBoundary--
+```
+![](images/2023-11-25-06-01-23.png)
+
+- 以下のようなResponseが表示されたらOKです。
+![](images/2023-11-25-06-04-35.png)
+
+- Supabaseのlearning-phaseバケットの中に画像が保存されていることが確認できます。
+![](images/2023-11-25-06-05-03.png)
 
 ## APIのカスタマイズ(ロジック追加)
 TODO

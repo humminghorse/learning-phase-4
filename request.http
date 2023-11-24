@@ -86,39 +86,13 @@ Content-Type: application/json
   "password": "password"
 }
 
-### image upload
-POST {{baseUrl}}/image HTTP/1.1
+### upload image
+POST {{baseUrl}}/images HTTP/1.1
 Content-Type: multipart/form-data; boundary=MyBoundary
 
 --MyBoundary
 Content-Disposition: form-data; name="file"; filename="pan.jpg"
 Content-Type: image/jpeg
 
-< pan.jpg
+< images/pan.jpg
 --MyBoundary--
-
-
-# 以下、後で消す
-###
-# 画像アップロード
-# https://qiita.com/mgmgmogumi/items/ce87f6c35c0922ba2c67
-# https://fand.jp/rest-client-with-vs-code/
-# https://github.com/Huachao/vscode-restclient
-POST https://api.thecatapi.com/v1/images/upload HTTP/1.1
-Content-Type: multipart/form-data; boundary=MyBoundary
-x-api-key: live_JzecJMVSzB4ZbJJaXZel1B9AOkAVxJBwhrqmw9GWufKeN9QR0co2cWZUEB8NQ6MB
-
---MyBoundary
-Content-Disposition: form-data; name="file"; filename="pan.jpg"
-Content-Type: image/jpeg
-
-< pan.jpg
---MyBoundary--
-# Content-Disposition: form-data; name="file"; filename="imahashi.png"
-# Content-Type: image/png
-
-# < imahashi.png
-# --MyBoundary--
-
-# 【HTTP】multipart/form-data の boundary って何ぞや？
-# https://qiita.com/kunihiros/items/e11daacfd62d85d83c06

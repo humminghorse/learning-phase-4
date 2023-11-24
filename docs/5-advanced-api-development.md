@@ -1,7 +1,46 @@
 # 5. API開発応用編
 
-## 一覧取得APIに検索条件を入れる
-https://github.com/naotakke/learning-phase-4/pull/1/files
+## APIのカスタマイズ
+
+### 一覧取得APIに検索条件を指定する
+前回作成したペットの一覧取得APIで、名前を検索条件に指定して一覧を取得できるようにしましょう。
+
+- `src/app/api/pets/route.ts` を以下のように修正してください。
+  - `import { type NextRequest } from 'next/server'` を追加
+  - `GET /api/pets` のAPIを以下のように変更します。
+    ```
+    // GET /api/pets
+    export async function GET(request: NextRequest) {
+      const searchParams = request.nextUrl.searchParams
+      const queryName = searchParams.get('name')
+      // findMany returns a list of records.
+      const pets = await prisma.pet.findMany({
+        // sort by id ascending
+        orderBy: { id: 'asc' },
+        // select only id, name, imageUrl, and owner.name
+        select: { id: true, name: true, imageUrl: true, owner: { select: { name: true } } },
+        where: queryName ? { name: { contains: queryName } } : undefined,
+      })
+      // return Response with pets to json
+      return NextResponse.json({ pets })
+    }
+    ```
+Diffは以下のようになります。
+![](images/2023-11-25-07-24-22.png)
+
+- request.httpに以下を追加して、SendRequestを実行してください。
+  - `?name=MIAO` のMIAOが名前の検索キーワードになります。
+```
+### search pets by name
+
+GET {{baseUrl}}/pets?name=MIAO HTTP/1.1
+Content-Type: application/json
+```
+
+![](images/2023-11-25-07-36-27.png)
+
+- Responseに、名前が検索キーワードを含むペットが返ってくればOKです。
+![](images/2023-11-25-07-36-51.png)
 
 
 ## 認証

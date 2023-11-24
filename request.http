@@ -5,6 +5,11 @@
 GET {{baseUrl}}/pets HTTP/1.1
 Content-Type: application/json
 
+### search pets by name
+GET {{baseUrl}}/pets?name=MIAO HTTP/1.1
+Content-Type: application/json
+
+
 ###
 
 GET {{baseUrl}}/pets/1 HTTP/1.1

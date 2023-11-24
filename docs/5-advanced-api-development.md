@@ -1,28 +1,13 @@
 # 5. API開発応用編
-- 一覧取得APIに検索条件を入れる
-- 認証
-- 画像のアップロード
-
---- 最低限
-- delete pets のweightへの外部キー制約の解消
-- APIのカスタマイズ(ロジック追加)
-- テーブル設計を考えてもらえるようなネタ
 
 ## 一覧取得APIに検索条件を入れる
 https://github.com/naotakke/learning-phase-4/pull/1/files
 
-## delete pets のweightへの外部キー制約の解消
-TODO
-
 
 ## 認証
+Supabaseを使って認証機能を実装しましょう。
+
 ### Supabaseの認証機能を使う準備
-<!-- 話題のSupabaseでサクッと認証機能をつくってみた！: https://qiita.com/kaho_eng/items/cb8d735b5b6ca1b3a6c5 -->
-
-<!-- Supabase Auth with the Next.js App Router: https://supabase.com/docs/guides/auth/auth-helpers/nextjs?language=ts#server-side -->
-
-<!-- Supabase Auth のユーザー情報を操作する方法: https://zenn.dev/matken/articles/use-user-info-with-supabase -->
-
 - Supabaseで Project Settings > API を開き、Project URLとProject API key(anon public)をコピーする
 ![](images/2023-11-25-02-06-02.png)
 - Visual Studio Codeで.envを開き、以下2行を追加する
@@ -155,15 +140,9 @@ Content-Type: application/json
   - デコードができるサイト: https://jwt.io/
 ![](images/2023-11-25-04-05-07.png)
 
-<!-- 本当は、AuthorizationヘッダーでBearerを受けとって、supabaseClientにセットしたい。ただ、フロントアプリを作ればそんなことしなくて良いので、無駄かも。 -->
-
 
 ## ファイルのアップロード
 画像ファイルをアップロードできるAPIを作成しましょう。
-<!-- Supabaseストレージに画像をアップロードし、表示する: https://qiita.com/dshukertjr/items/05437bb88bc7ae8583b8 -->
-<!-- 話題のSupabaseでサクッと画像投稿機能をつくってみた！: https://qiita.com/kaho_eng/items/84df0ccfdc0ab5b8eb83 -->
-
-<!-- Next.JS の API Route でのファイルアップロード受信処理: https://qiita.com/migimatsu/items/3fabebdaf087ee120859 -->
 
 ### バケット(ファイルの保存先)の作成
 - Supabaseで Storage > New Bucketを選択してください。
@@ -242,9 +221,3 @@ https://supabase.com/docs/reference/javascript/storage-from-list
 ![](images/2023-11-25-06-24-20.png)
 
 ヒント: listメソッドに渡すParametersは全てOptionalなので、省略して `list()` としてOKです。
-
-## APIのカスタマイズ(ロジック追加)
-TODO
-
-## テーブル設計を考えてもらえるようなネタ
-TODO

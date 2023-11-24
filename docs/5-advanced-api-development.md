@@ -1,13 +1,13 @@
-# 5. API開発応用編
+# 5. Advanced api development
 
-## APIのカスタマイズ
+## Customize API
 
-### 一覧取得APIに検索条件を指定する
-前回作成したペットの一覧取得APIで、名前を検索条件に指定して一覧を取得できるようにしましょう。
+### Specifying search conditions for the API to retrieve a list
+Let's make it possible to retrieve a list of pets by specifying their names as search conditions in the API for retrieving a list of pets created in the previous lecture.
 
-- `src/app/api/pets/route.ts` を以下のように修正してください。
-  - `import { type NextRequest } from 'next/server'` を追加
-  - `GET /api/pets` のAPIを以下のように変更します。
+- Modify `src/app/api/pets/route.ts` as follows.
+  - Add `import { type NextRequest } from 'next/server'`.
+  - Modify the `GET /api/pets` API as follows.
     ```
     // GET /api/pets
     export async function GET(request: NextRequest) {
@@ -25,11 +25,11 @@
       return NextResponse.json({ pets })
     }
     ```
-Diffは以下のようになります。
+Diff will be as follows.
 ![](images/2023-11-25-07-24-22.png)
 
-- request.httpに以下を追加して、SendRequestを実行してください。
-  - `?name=MIAO` のMIAOが名前の検索キーワードになります。
+- Add the following to request.http and run SendRequest.
+  - MIAO in ``?name=MIAO`` will be the search keyword for name.
 ```
 ### search pets by name
 
@@ -39,29 +39,29 @@ Content-Type: application/json
 
 ![](images/2023-11-25-07-36-27.png)
 
-- Responseに、名前が検索キーワードを含むペットが返ってくればOKです。
+- If Response shows pets whose names contain the search keyword, it is OK.
 ![](images/2023-11-25-07-36-51.png)
 
 
-## 認証
-Supabaseを使って認証機能を実装しましょう。
+## Authentication
+Let's implement the authentication function using Supabase.
 
-### Supabaseの認証機能を使う準備
-- Supabaseで Project Settings > API を開き、Project URLとProject API key(anon public)をコピーする
+### Preparing to use Supabase's authentication functionality
+- Open Project Settings > API in Supabase and copy the Project URL and Project API key (anon public)
 ![](images/2023-11-25-02-06-02.png)
-- Visual Studio Codeで.envを開き、以下2行を追加する
+- Open .env in Visual Studio Code and add the following two lines
 ```
 NEXT_PUBLIC_SUPABASE_URL=<Project URL>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<Project API key(anon public)>
 ```
 ![](images/2023-11-24-10-51-23.png)
 
-- 認証用にSupabaseのライブラリをインストール
+- Install Supabase libraries for authentication
 ```bash
 npm install @supabase/supabase-js
 ```
 
-- `lib` フォルダの配下に `supabaseClient.ts`というファイルを追加し、以下のコードをコピーする。
+- Add a file named `supabaseClient.ts` under the `lib` folder and copy the following code.
 
 ```
 import { createClient } from '@supabase/supabase-js'
@@ -77,12 +77,12 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 ![](images/2023-11-25-02-29-52.png)
 
-これで。Supabaseの認証機能を使う準備ができました。
+You are now ready to use the Supabase authentication feature.
 
 ### Signup
-まずは、Signupできるようにします。
+First of all, you need to enable Signup.
 
-- `src/app/api` 配下に `signup` フォルダを作成し、その中に `route.ts`というファイルを作成して、以下のコードを貼り付けてください。
+- Create a `signup` folder under `src/app/api`, create a file `route.ts` in it, and paste the following code.
 
 ```
 import { NextResponse } from 'next/server'
@@ -109,7 +109,7 @@ export async function POST(request: Request) {
 
 ![](images/2023-11-25-02-48-45.png)
 
-- request.httpに以下を追記して、emailとpasswordの値を書き換えてから、SendRequestを実行してください。
+- Add the following to request.http, rewrite the email and password values, and then execute SendRequest.
 
 ```
 ### signup
@@ -124,25 +124,26 @@ Content-Type: application/json
 
 ![](images/2023-11-25-02-55-40.png)
 
-- 以下のようなResponseが表示されたらOKです。
+- If you see a Response like the following, it is OK.
 ![](images/2023-11-25-03-00-03.png)
 
-- SupabaseでAuthentication > Usersを開くと、ユーザーが登録されていることが確認できます。
+- Open Authentication > Users in Supabase and you will see that the user is registered.
 ![](images/2023-11-25-03-00-38.png)
 
-- 指定したメールアドレス宛に、Signupの確認を求めるメールが届きます。Confirm your mailをクリックしましょう。
+- Click Confirm your mail in received email.
+
 ![](images/2023-11-25-03-03-11.png)
 
-- このような画面にリダイレクトされますが、アプリの画面を作っていないので、これでOKです。
-![](images/2023-11-25-03-05-23.png)
+- You will be redirected to a screen like this, but since you have not created an application screen, this is OK.
+![](images/2023-11-25-03-03-05-23.png)
 
-- もう一度SupabaseでAuthentication > Usersを開くと、Last Sign Inの値が `Waiting for verification` から、メール内のConfirm your mailをクリックした日時に変わったことが確認できます。
+- If you open Authentication > Users in Supabase again, you will see that the Last Sign In value has changed from `Waiting for verification` to the date and time you clicked Confirm your mail in the email.
 ![](images/2023-11-25-03-08-38.png)
 
 ### Signin
-続いて、Signinできるようにします。
+Next, we will make it possible to Signin.
 
-- `src/app/api` 配下に `signin` フォルダを作成し、その中に `route.ts`というファイルを作成して、以下のコードを貼り付けてください。
+- Create a `signin` folder under `src/app/api`, create a file `route.ts` in it, and paste the following code.
 
 ```
 import { NextResponse } from 'next/server'
@@ -165,7 +166,7 @@ export async function POST(request: Request) {
 
 ![](images/2023-11-25-03-27-36.png)
 
-- request.httpに以下を追記して、emailとpasswordの値を書き換えてから、SendRequestを実行してください。
+- Add the following to request.http, rewrite the email and password values, and then execute SendRequest.
 
 ```
 ### signin
@@ -180,47 +181,48 @@ Content-Type: application/json
 
 ![](images/2023-11-25-03-21-14.png)
 
-- 以下のようなResponseが表示されたらOKです。
-  - Responseに含まれるaccess_tokenには本人確認に必要な情報が含まれており、これを使って、認証済の状態であることの確認が行われます。
+- If you see a response similar to the one below, you are good to go.
+  - The access_token in the response contains information necessary for identification, and this is used to confirm that the user has been authenticated.
 ![](images/2023-11-25-03-28-36.png)
 
 
-- 参考: access_tokenをデコードすることで、ユーザ情報を取得できます。
-  - デコードができるサイト: https://jwt.io/
+- Note: User information can be obtained by decoding access_token.
+  - Site where you can decode: https://jwt.io/
 ![](images/2023-11-25-04-05-07.png)
 
 
-## ファイルのアップロード
-画像ファイルをアップロードできるAPIを作成しましょう。
+## Uploading files
+Create an API that allows you to upload image files.
 
-### バケット(ファイルの保存先)の作成
-- Supabaseで Storage > New Bucketを選択してください。
+### Creating a bucket (file storage location)
+- In Supabase, select Storage > New Bucket.
 ![](images/2023-11-24-10-00-33.png)
 
-- Name of bucketに `learning-phase`と入力し、Public bucketをONにしてSaveしてください。
+- Enter `learning-phase` in Name of bucket, turn on Public bucket and Save.
 
 ![](images/2023-11-24-10-02-06.png)
 
-### ポリシー設定
-初期状態ではセキュリティ設定でファイルアップロードができないので、許可設定を追加します。
+### Policy settings
+In the initial state, file upload is not allowed in the security settings, so add a permission setting.
 
-- Policiesを開き、learning-phaseの右のNewPolicyボタンをクリックしてください。
+- Open Policies and click the NewPolicy button to the right of learning-phase.
 ![](images/2023-11-24-10-04-36.png)
 
-- For full customizationを選択してください。
+- Select For full customization.
+
 ![](images/2023-11-24-10-05-10.png)
 
-- 以下のように設定してください
+- Set as follows
   - Policy name: allow-all
-  - Allowed operation: SELECT, INSERT, UPDATE, DELETE
+  - Allowed operations: SELECT, INSERT, UPDATE, DELETE
   - Target roles: Default
   - Policy definition: Default
 
 ![](images/2023-11-25-04-37-27.png)
 
 
-### 画像アップロードAPI
-- `src/app/api` 配下に `images` フォルダを作成し、その中に `route.ts`というファイルを作成して、以下のコードを貼り付けてください。
+### Image Upload API
+- Create a `images` folder under `src/app/api`, create a file `route.ts` in it, and paste the following code.
 
 ```
 import { NextResponse } from 'next/server'
@@ -241,10 +243,11 @@ export async function POST(request: Request) {
 
 ![](images/2023-11-25-05-50-29.png)
 
-- imagesフォルダを作成し、アップロードする画像を保存してください。どんな画像でもOKです。
+- Create an images folder and save the images you wish to upload. Any images are acceptable.
+
 ![](images/2023-11-25-05-58-50.png)
 
-- request.httpに以下を追記して、<YOUR FILE NAME>と <YOUR FILE PATH>の値を書き換えてから、SendRequestを実行してください。
+- Add the following to request.http, rewrite values of YOUR FILE NAME and YOUR FILE PATH, and then execute SendRequest.
 
 ```
 ### upload image
@@ -261,22 +264,23 @@ Content-Type: image/jpeg
 
 ![](images/2023-11-25-06-01-23.png)
 
-- 以下のようなResponseが表示されたらOKです。
+- If you see a Response like the following, you are OK.
 ![](images/2023-11-25-06-04-35.png)
 
-- Supabaseのlearning-phaseバケットの中に画像が保存されていることが確認できます。
+- You can confirm that the images are stored in the learning-phase bucket of Supabase.
 ![](images/2023-11-25-06-05-03.png)
 
-### 演習: 画像の一覧取得API
-こちらのlistメソッドを使ってlearning-phaseバケットのファイル一覧を取得取得するAPIを作成してみましょう。
+### Exercise: API to get a list of images
+Let's create an API to get a list of files in the learning-phase bucket using this list method.
 https://supabase.com/docs/reference/javascript/storage-from-list
 
 ![](images/2023-11-25-06-24-20.png)
 
-ヒント: listメソッドに渡すParametersは全てOptionalなので、省略して `list()` としてOKです。
+Tip: All Parameters passed to the list method are Optional, so you can omit them and use `list()`.
 
-## Vercel上のアプリへの反映
-変更のCommit, Pushをしておきましょう。そうすることで、Vercel上のアプリにも反映をしておきましょう。
-(やり方を忘れた人は、第4回レクチャーの資料を参考にしてください。)
+## Deploy to the application on Vercel
+Commit and Push your changes. By doing so, you should also reflect the changes to the app on Vercel.
+(If you forget how to do this, please refer to the material in the 4th lecture.)
 
+Translated with www.DeepL.com/Translator (free version)
 

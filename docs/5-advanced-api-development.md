@@ -235,6 +235,14 @@ Content-Type: image/jpeg
 - Supabaseのlearning-phaseバケットの中に画像が保存されていることが確認できます。
 ![](images/2023-11-25-06-05-03.png)
 
+### 演習: 画像の一覧取得API
+こちらのlistメソッドを使ってlearning-phaseバケットのファイル一覧を取得取得するAPIを作成してみましょう。
+https://supabase.com/docs/reference/javascript/storage-from-list
+
+![](images/2023-11-25-06-24-20.png)
+
+ヒント: listメソッドに渡すParametersは全てOptionalなので、省略して `list()` としてOKです。
+
 ## APIのカスタマイズ(ロジック追加)
 TODO
 

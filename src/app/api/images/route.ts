@@ -12,3 +12,8 @@ export async function POST(request: Request) {
 
   return NextResponse.json(response)
 }
+
+export async function GET() {
+  const response = await supabase.storage.from('learning-phase').list()
+  return NextResponse.json(response)
+}

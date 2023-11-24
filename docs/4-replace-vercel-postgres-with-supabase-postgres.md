@@ -146,3 +146,5 @@ npx prisma studio
 ![](images/2023-11-24-00-31-38.png)
 
 これで、VercelにデプロイしたアプリのデータベースをSupabaseに置き換えられました。
+
+Next [`Advanced API Development #5`](./5-advanced-api-development.md)

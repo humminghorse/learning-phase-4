@@ -48,3 +48,5 @@
   - [`Test and Operation check`](./2-experience-api-development-7.md#test-and-operation-check)
 - [`Experience Web Development Basics #3`](./3-experience-front-development-1.md)
   - [`Extra Web Sample`](./3-experience-front-development-1.md#extra-web-sample)
+- [`Replace Vercel Postgres with Supabase Postgres #4`](./4-replace-vercel-postgres-with-supabase-postgres.md)
+- [`Advanced API Development #5`](./5-advanced-api-development.md)

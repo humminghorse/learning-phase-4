@@ -55,7 +55,6 @@ Content-Type: application/json
 
 
 ###
-
 DELETE {{baseUrl}}/pets/2 HTTP/1.1
 Content-Type: application/json
 
@@ -68,3 +67,36 @@ Content-Type: application/json
     "weight": 3.0
   }
 }
+
+### signup
+POST {{baseUrl}}/signup HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "imahashi@guildworks.jp",
+  "password": "password"
+}
+
+### signin
+POST {{baseUrl}}/signin HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "imahashi@guildworks.jp",
+  "password": "password"
+}
+
+### upload image
+POST {{baseUrl}}/images HTTP/1.1
+Content-Type: multipart/form-data; boundary=MyBoundary
+
+--MyBoundary
+Content-Disposition: form-data; name="file"; filename="pan.jpg"
+Content-Type: image/jpeg
+
+< images/pan.jpg
+--MyBoundary--
+
+### get images
+GET {{baseUrl}}/images HTTP/1.1
+Content-Type: application/json

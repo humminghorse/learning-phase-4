@@ -9,9 +9,6 @@ Databaseとして利用していたVercel PostgresのWritten Dataの月間の上
 
 そのままではデータの書き込みができず、使い物にならないので、Databaseを別のサービスである、Supabaseに置き換えていきましょう。
 
-<!-- 無料から使えるデータベース比較: https://qiita.com/takiguchi-yu/items/020e17151903011d92f6 -->
-<!-- https://supabase.com/pricing -->
-
 ## Supabaseでプロジェクトを作成
 - 前回作成したVercelプロジェクトのStorageタブを開いて、Connect Storeボタンをクリックしてください。
 ![](images/2023-11-23-22-04-24.png)
@@ -61,8 +58,6 @@ Databaseとして利用していたVercel PostgresのWritten Dataの月間の上
 ![](images/2023-11-23-22-31-15.png)
 
 ## ローカルアプリのデータベースをSupabaseに置き換え
-
-<!-- 参考: Rails エンジニアが Prisma に入門する：本番デプロイ(Vercel+Supabase)編: https://zenn.dev/monicle/articles/a3c153c8127eb9 -->
 
 - Settings > Database > Connection Pooling Custom Configuration > Connection stringでCopyをクリックしてください。
 ![](images/2023-11-23-23-25-10.png)
@@ -151,3 +146,5 @@ npx prisma studio
 ![](images/2023-11-24-00-31-38.png)
 
 これで、VercelにデプロイしたアプリのデータベースをSupabaseに置き換えられました。
+
+Next [`Advanced API Development #5`](./5-advanced-api-development.md)

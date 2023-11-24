@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
 import { supabase } from '../../../../lib/supabaseClient'
@@ -16,9 +15,6 @@ export async function POST(request: Request) {
       emailRedirectTo: `${requestUrl.origin}/auth/callback`,
     },
   })
-  console.log(authResponse)
 
-  return NextResponse.redirect(requestUrl.origin, {
-    status: 301,
-  })
+  return NextResponse.json(authResponse)
 }

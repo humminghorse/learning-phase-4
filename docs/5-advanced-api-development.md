@@ -283,8 +283,5 @@ https://supabase.com/docs/reference/javascript/storage-from-list
 Tip: All Parameters passed to the list method are Optional, so you can omit them and use `list()`.
 
 ## Deploy to the application on Vercel
-Commit and Push your changes. By doing so, you should also reflect the changes to the app on Vercel.
+Commit and Push your changes. By doing so, you can deploy the changes to the app on Vercel.
 (If you forget how to do this, please refer to the material in the 4th lecture.)
-
-Translated with www.DeepL.com/Translator (free version)
-

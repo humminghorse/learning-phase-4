@@ -8,7 +8,7 @@ Let's make it possible to retrieve a list of pets by specifying their names as s
 - Modify `src/app/api/pets/route.ts` as follows.
   - Add `import { type NextRequest } from 'next/server'`.
   - Modify the `GET /api/pets` API as follows.
-    ```
+    ```ts
     // GET /api/pets
     export async function GET(request: NextRequest) {
       const searchParams = request.nextUrl.searchParams
@@ -67,7 +67,7 @@ npm install @supabase/supabase-js
 
 - Add a file named `supabaseClient.ts` under the `lib` folder and copy the following code.
 
-```
+```ts
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -88,7 +88,7 @@ First of all, you need to enable Signup.
 
 - Create a `signup` folder under `src/app/api`, create a file `route.ts` in it, and paste the following code.
 
-```
+```ts
 import { NextResponse } from 'next/server'
 
 import { supabase } from '../../../../lib/supabaseClient'
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
 
 ![](images/2023-11-25-02-48-45.png)
 
-- Add the following to request.http, rewrite the email and password values, and then execute SendRequest.
+- Add the following to `request.http`, rewrite the email and password values, and then execute SendRequest.
 
 ```
 ### signup
@@ -149,7 +149,7 @@ Next, we will make it possible to Signin.
 
 - Create a `signin` folder under `src/app/api`, create a file `route.ts` in it, and paste the following code.
 
-```
+```ts
 import { NextResponse } from 'next/server'
 
 import { supabase } from '../../../../lib/supabaseClient'
@@ -228,7 +228,7 @@ In the initial state, file upload is not allowed in the security settings, so ad
 ### Image Upload API
 - Create a `images` folder under `src/app/api`, create a file `route.ts` in it, and paste the following code.
 
-```
+```ts
 import { NextResponse } from 'next/server'
 
 import { supabase } from '../../../../lib/supabaseClient'
@@ -251,7 +251,7 @@ export async function POST(request: Request) {
 
 ![](images/2023-11-25-05-58-50.png)
 
-- Add the following to request.http, rewrite values of YOUR FILE NAME and YOUR FILE PATH, and then execute SendRequest.
+- Add the following to `request.http`, rewrite values of YOUR FILE NAME and YOUR FILE PATH, and then execute SendRequest.
 
 ```
 ### upload image

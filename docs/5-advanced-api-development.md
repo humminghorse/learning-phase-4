@@ -28,11 +28,12 @@ Let's make it possible to retrieve a list of pets by specifying their names as s
 Diff will be as follows.
 ![](images/2023-11-25-07-24-22.png)
 
-- Add the following to request.http and run SendRequest.
-  - MIAO in ``?name=MIAO`` will be the search keyword for name.
+- Add the following to `request.http` and run SendRequest.
+  - `?name=MIAO` will be the search keyword for name.
+
+
 ```
 ### search pets by name
-
 GET {{baseUrl}}/pets?name=MIAO HTTP/1.1
 Content-Type: application/json
 ```
@@ -50,13 +51,16 @@ Let's implement the authentication function using Supabase.
 - Open Project Settings > API in Supabase and copy the Project URL and Project API key (anon public)
 ![](images/2023-11-25-02-06-02.png)
 - Open .env in Visual Studio Code and add the following two lines
+
 ```
 NEXT_PUBLIC_SUPABASE_URL=<Project URL>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<Project API key(anon public)>
 ```
+
 ![](images/2023-11-24-10-51-23.png)
 
 - Install Supabase libraries for authentication
+
 ```bash
 npm install @supabase/supabase-js
 ```
@@ -166,7 +170,7 @@ export async function POST(request: Request) {
 
 ![](images/2023-11-25-03-27-36.png)
 
-- Add the following to request.http, rewrite the email and password values, and then execute SendRequest.
+- Add the following to `request.http`, rewrite the email and password values, and then execute SendRequest.
 
 ```
 ### signin
